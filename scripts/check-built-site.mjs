@@ -42,6 +42,12 @@ for (const file of htmlFiles) {
   if (!html.includes('type="application/ld+json"')) {
     failures.push(`${displayPath}: missing JSON-LD`);
   }
+  if (!html.includes("https://www.googletagmanager.com/gtag/js?id=G-560YQ8HT53")) {
+    failures.push(`${displayPath}: missing Google Analytics loader`);
+  }
+  if (!html.includes("gtag('config', 'G-560YQ8HT53')")) {
+    failures.push(`${displayPath}: missing Google Analytics configuration`);
+  }
 
   for (const match of html.matchAll(/href="(\/[^"#?]*[^"#?]?)"/g)) {
     const href = match[1];

@@ -70,6 +70,17 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN;
     <meta name="twitter:image" content="https://peptidecalculator.xyz/og-card.svg" />
 
     <title>{title}</title>
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-560YQ8HT53"
+    ></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-560YQ8HT53');
+    </script>
     <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
     {
       analyticsToken && (
