@@ -1,0 +1,43 @@
+---
+const feedbackUrl = import.meta.env.PUBLIC_FEEDBACK_URL;
+---
+
+<footer class="bg-navy-950 mt-20 text-slate-300">
+  <div class="shell grid gap-10 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <p class="mb-3 text-lg font-semibold text-white">Peptide Calculator</p>
+      <p class="max-w-md text-sm leading-6 text-slate-400">
+        A free, independent calculation tool for converting known peptide quantities
+        into concentration, volume, and U-100 syringe markings.
+      </p>
+    </div>
+
+    <div>
+      <p class="mb-3 text-sm font-semibold text-white">Tools & guides</p>
+      <ul class="space-y-2 text-sm">
+        <li><a class="inline-flex min-h-7 items-center hover:text-white" href="/peptide-reconstitution-calculator/">Reconstitution calculator</a></li>
+        <li><a class="inline-flex min-h-7 items-center hover:text-white" href="/peptide-units-calculator/">Syringe units calculator</a></li>
+        <li><a class="inline-flex min-h-7 items-center hover:text-white" href="/peptide-calculator-for-retatrutide/">Retatrutide calculator</a></li>
+        <li><a class="inline-flex min-h-7 items-center hover:text-white" href="/methodology/">Formula & methodology</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="mb-3 text-sm font-semibold text-white">Site information</p>
+      <ul class="space-y-2 text-sm">
+        <li><a class="inline-flex min-h-7 items-center hover:text-white" href="/about/">About</a></li>
+        <li><a class="inline-flex min-h-7 items-center hover:text-white" href="/medical-disclaimer/">Medical disclaimer</a></li>
+        <li><a class="inline-flex min-h-7 items-center hover:text-white" href="/privacy/">Privacy</a></li>
+        <li><a class="inline-flex min-h-7 items-center hover:text-white" href="/terms/">Terms</a></li>
+        {feedbackUrl && <li><a class="inline-flex min-h-7 items-center hover:text-white" href={feedbackUrl}>Send feedback</a></li>}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="shell flex flex-col gap-3 py-6 text-xs text-slate-400 sm:flex-row sm:justify-between">
+      <p>© {new Date().getFullYear()} Peptide Calculator.</p>
+      <p>For calculation and educational use. Not medical advice.</p>
+    </div>
+  </div>
+</footer>

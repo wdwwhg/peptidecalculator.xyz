@@ -1,0 +1,389 @@
+---
+import {
+  DEFAULT_CALCULATOR_INPUT
+} from "../lib/calculatorState";
+import type { CalculatorInput } from "../lib/peptideCalculator";
+
+interface Props {
+  heading?: string;
+  intro?: string;
+  defaults?: Partial<CalculatorInput>;
+}
+
+const {
+  heading = "Free peptide calculator",
+  intro = "Enter a known vial amount, diluent volume, and target dose. Results update instantly.",
+  defaults: suppliedDefaults = {}
+} = Astro.props;
+
+const defaults: CalculatorInput = {
+  ...DEFAULT_CALCULATOR_INPUT,
+  ...suppliedDefaults
+};
+---
+
+<section
+  class="surface-card overflow-hidden"
+  data-peptide-calculator
+  data-defaults={JSON.stringify(defaults)}
+  aria-labelledby="calculator-heading"
+>
+  <div class="bg-navy-950 px-5 py-5 text-white sm:px-7">
+    <p class="text-clinical-100 mb-1 text-xs font-bold tracking-[0.14em] uppercase">
+      No signup · instant results
+    </p>
+    <h2 id="calculator-heading" class="text-2xl text-white sm:text-3xl">{heading}</h2>
+    <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-300">{intro}</p>
+  </div>
+
+  <form class="grid gap-6 p-5 sm:p-7" data-calculator-form novalidate>
+    <div class="grid gap-5 sm:grid-cols-2">
+      <fieldset class="contents">
+        <legend class="sr-only">Peptide and dilution amounts</legend>
+
+        <label class="grid gap-2 text-sm font-semibold text-slate-800">
+          Peptide in vial
+          <span class="flex">
+            <input
+              class="min-w-0 flex-1 rounded-l-xl border border-r-0 border-slate-300 bg-white px-3 py-3 text-base font-normal tabular-nums"
+              type="number"
+              name="vialAmount"
+              min="0"
+              step="any"
+              inputmode="decimal"
+              value={defaults.vialAmount}
+              aria-describedby="vial-help"
+            />
+            <select
+              class="rounded-r-xl border border-slate-300 bg-slate-50 px-3 text-sm"
+              name="vialUnit"
+              aria-label="Vial amount unit"
+            >
+              <option value="mg" selected={defaults.vialUnit === "mg"}>mg</option>
+              <option value="mcg" selected={defaults.vialUnit === "mcg"}>mcg</option>
+            </select>
+          </span>
+          <span id="vial-help" class="text-xs font-normal text-slate-500">Total labeled mass in the vial.</span>
+        </label>
+
+        <label class="grid gap-2 text-sm font-semibold text-slate-800">
+          Diluent added
+          <span class="flex">
+            <input
+              class="min-w-0 flex-1 rounded-l-xl border border-r-0 border-slate-300 bg-white px-3 py-3 text-base font-normal tabular-nums"
+              type="number"
+              name="diluentMl"
+              min="0"
+              step="any"
+              inputmode="decimal"
+              value={defaults.diluentMl}
+            />
+            <span class="grid min-w-17 place-items-center rounded-r-xl border border-slate-300 bg-slate-50 text-sm">mL</span>
+          </span>
+          <span class="text-xs font-normal text-slate-500">Final liquid volume used in the calculation.</span>
+        </label>
+
+        <label class="grid gap-2 text-sm font-semibold text-slate-800">
+          Known target dose
+          <span class="flex">
+            <input
+              class="min-w-0 flex-1 rounded-l-xl border border-r-0 border-slate-300 bg-white px-3 py-3 text-base font-normal tabular-nums"
+              type="number"
+              name="targetDose"
+              min="0"
+              step="any"
+              inputmode="decimal"
+              value={defaults.targetDose}
+            />
+            <select
+              class="rounded-r-xl border border-slate-300 bg-slate-50 px-3 text-sm"
+              name="targetDoseUnit"
+              aria-label="Target dose unit"
+            >
+              <option value="mcg" selected={defaults.targetDoseUnit === "mcg"}>mcg</option>
+              <option value="mg" selected={defaults.targetDoseUnit === "mg"}>mg</option>
+            </select>
+          </span>
+          <span class="text-xs font-normal text-slate-500">Use a value already provided by a qualified professional or protocol.</span>
+        </label>
+
+        <label class="grid gap-2 text-sm font-semibold text-slate-800">
+          U-100 syringe capacity
+          <select
+            class="rounded-xl border border-slate-300 bg-white px-3 py-3 text-base font-normal"
+            name="syringeCapacityMl"
+          >
+            <option value="0.3" selected={defaults.syringeCapacityMl === 0.3}>0.3 mL / 30 units</option>
+            <option value="0.5" selected={defaults.syringeCapacityMl === 0.5}>0.5 mL / 50 units</option>
+            <option value="1" selected={defaults.syringeCapacityMl === 1}>1.0 mL / 100 units</option>
+          </select>
+          <span class="text-xs font-normal text-slate-500">U-100 markings represent volume: 100 units = 1 mL.</span>
+        </label>
+
+        <label class="grid gap-2 text-sm font-semibold text-slate-800 sm:col-span-2">
+          Smallest visible syringe marking
+          <select
+            class="rounded-xl border border-slate-300 bg-white px-3 py-3 text-base font-normal"
+            name="syringeUnitStep"
+          >
+            <option value="0.5" selected={defaults.syringeUnitStep === 0.5}>0.5 unit</option>
+            <option value="1" selected={defaults.syringeUnitStep === 1}>1 unit</option>
+            <option value="2" selected={defaults.syringeUnitStep === 2}>2 units</option>
+          </select>
+        </label>
+      </fieldset>
+    </div>
+
+    <div
+      class="hidden rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800"
+      data-errors
+      role="alert"
+    ></div>
+
+    <div class="bg-clinical-50 border-clinical-100 rounded-2xl border p-5 sm:p-6">
+      <div class="mb-5 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <p class="text-clinical-700 text-xs font-bold tracking-[0.14em] uppercase">Calculated result</p>
+          <p class="text-navy-950 mt-1 text-3xl font-bold tabular-nums">
+            <span data-result="units">5</span> U-100 units
+          </p>
+          <p class="mt-1 text-sm text-slate-600">
+            Exact volume: <strong data-result="volume">0.05 mL</strong>
+          </p>
+        </div>
+        <span class="bg-clinical-100 text-clinical-700 rounded-full px-3 py-1 text-xs font-bold">
+          Volume marking, not IU
+        </span>
+      </div>
+
+      <div class="mb-6" aria-hidden="true">
+        <svg viewBox="0 0 420 82" class="h-auto w-full max-w-xl" role="img">
+          <title>Visual U-100 syringe fill estimate</title>
+          <path d="M360 34h43v14h-43" fill="none" stroke="#64748b" stroke-width="4" stroke-linejoin="round" />
+          <path d="M403 41h16" stroke="#64748b" stroke-width="2" />
+          <rect x="46" y="18" width="314" height="46" rx="8" fill="#fff" stroke="#123b61" stroke-width="3" />
+          <rect x="49" y="21" width="0" height="40" rx="5" fill="#62d3c0" data-syringe-fill />
+          <path d="M21 14v54M21 25h25M21 57h25" stroke="#123b61" stroke-width="4" stroke-linecap="round" />
+          <g stroke="#64748b" stroke-width="2">
+            <path d="M78 18v11M109 18v8M140 18v11M171 18v8M202 18v11M233 18v8M264 18v11M295 18v8M326 18v11" />
+          </g>
+        </svg>
+      </div>
+
+      <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-live="polite" aria-atomic="true">
+        <div>
+          <dt class="text-xs font-semibold tracking-wide text-slate-500 uppercase">Concentration</dt>
+          <dd class="text-navy-950 mt-1 font-bold tabular-nums" data-result="concentration">5 mg/mL</dd>
+          <dd class="text-xs text-slate-500" data-result="concentration-mcg">5,000 mcg/mL</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold tracking-wide text-slate-500 uppercase">Draw volume</dt>
+          <dd class="text-navy-950 mt-1 font-bold tabular-nums" data-result="draw-volume">0.05 mL</dd>
+          <dd class="text-xs text-slate-500" data-result="microliters">50 µL</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold tracking-wide text-slate-500 uppercase">Visible marking</dt>
+          <dd class="text-navy-950 mt-1 font-bold tabular-nums" data-result="nearest-marking">5 units</dd>
+          <dd class="text-xs text-slate-500" data-result="marking-detail">5 tick marks</dd>
+        </div>
+        <div>
+          <dt class="text-xs font-semibold tracking-wide text-slate-500 uppercase">Theoretical doses</dt>
+          <dd class="text-navy-950 mt-1 font-bold tabular-nums" data-result="doses">40</dd>
+          <dd class="text-xs text-slate-500">before real-world losses</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div
+      class="hidden rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800"
+      data-warnings
+      role="status"
+    ></div>
+
+    <div class="flex flex-wrap gap-3">
+      <button type="button" class="button-primary" data-copy-result>Copy result</button>
+      <button type="button" class="button-secondary" data-copy-link>Copy share link</button>
+      <button type="reset" class="button-secondary" data-reset>Reset</button>
+      <span class="self-center text-sm font-medium text-clinical-700" data-action-status aria-live="polite"></span>
+    </div>
+
+    <p class="border-t border-slate-200 pt-5 text-xs leading-5 text-slate-500">
+      This calculator performs arithmetic only. It does not determine whether a dose,
+      substance, diluent, syringe, or route is appropriate. Confirm all inputs and
+      instructions with a qualified professional.
+    </p>
+  </form>
+</section>
+
+<script>
+  import {
+    DEFAULT_CALCULATOR_INPUT,
+    parseCalculatorState,
+    serializeCalculatorState
+  } from "../lib/calculatorState";
+  import {
+    calculatePeptide,
+    type CalculatorInput,
+    type CalculatorWarning,
+    type MassUnit
+  } from "../lib/peptideCalculator";
+
+  const warningMessages: Record<CalculatorWarning, string> = {
+    "dose-exceeds-vial": "The target dose is greater than the total amount entered for the vial.",
+    "syringe-capacity-exceeded": "The calculated draw volume exceeds the selected syringe capacity.",
+    "not-on-marking": "The exact result falls between visible syringe markings. Do not treat the nearest marking as a dosing recommendation."
+  };
+
+  const formatNumber = (value: number, maximumFractionDigits = 4) =>
+    new Intl.NumberFormat("en", {
+      maximumFractionDigits,
+      useGrouping: true
+    }).format(value);
+
+  const copyText = async (text: string) => {
+    if (!navigator.clipboard?.writeText) {
+      throw new Error("Clipboard access is unavailable in this browser.");
+    }
+    await navigator.clipboard.writeText(text);
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-peptide-calculator]").forEach((root) => {
+    if (root.dataset.ready === "true") return;
+    root.dataset.ready = "true";
+
+    const form = root.querySelector<HTMLFormElement>("[data-calculator-form]");
+    if (!form) return;
+
+    const suppliedDefaults = JSON.parse(root.dataset.defaults ?? "{}") as Partial<CalculatorInput>;
+    const defaults: CalculatorInput = { ...DEFAULT_CALCULATOR_INPUT, ...suppliedDefaults };
+    const hasSharedState = [...new URLSearchParams(window.location.search).keys()].some((key) =>
+      ["vial", "vu", "water", "dose", "du", "syringe", "step"].includes(key)
+    );
+    const initialState = hasSharedState
+      ? parseCalculatorState(new URLSearchParams(window.location.search), defaults)
+      : defaults;
+
+    const numberField = (name: string) =>
+      form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement;
+
+    const setFormState = (state: CalculatorInput) => {
+      numberField("vialAmount").value = String(state.vialAmount);
+      numberField("vialUnit").value = state.vialUnit;
+      numberField("diluentMl").value = String(state.diluentMl);
+      numberField("targetDose").value = String(state.targetDose);
+      numberField("targetDoseUnit").value = state.targetDoseUnit;
+      numberField("syringeCapacityMl").value = String(state.syringeCapacityMl);
+      numberField("syringeUnitStep").value = String(state.syringeUnitStep);
+    };
+
+    const readFormState = (): CalculatorInput => ({
+      vialAmount: Number(numberField("vialAmount").value),
+      vialUnit: numberField("vialUnit").value as MassUnit,
+      diluentMl: Number(numberField("diluentMl").value),
+      targetDose: Number(numberField("targetDose").value),
+      targetDoseUnit: numberField("targetDoseUnit").value as MassUnit,
+      syringeCapacityMl: Number(numberField("syringeCapacityMl").value),
+      syringeUnitStep: Number(numberField("syringeUnitStep").value)
+    });
+
+    const resultNode = (name: string) =>
+      root.querySelector<HTMLElement>(`[data-result="${name}"]`);
+    const errorsNode = root.querySelector<HTMLElement>("[data-errors]");
+    const warningsNode = root.querySelector<HTMLElement>("[data-warnings]");
+    const statusNode = root.querySelector<HTMLElement>("[data-action-status]");
+    const fillNode = root.querySelector<SVGRectElement>("[data-syringe-fill]");
+
+    const update = () => {
+      const input = readFormState();
+      const result = calculatePeptide(input);
+
+      if (!result.isValid) {
+        if (errorsNode) {
+          errorsNode.hidden = false;
+          errorsNode.textContent = "Enter a positive number in every field to calculate a result.";
+        }
+        if (warningsNode) warningsNode.hidden = true;
+        return;
+      }
+
+      if (errorsNode) errorsNode.hidden = true;
+
+      resultNode("units")!.textContent = formatNumber(result.syringeUnitsExact, 3);
+      resultNode("volume")!.textContent = `${formatNumber(result.drawVolumeMl, 5)} mL`;
+      resultNode("concentration")!.textContent = `${formatNumber(result.concentrationMgPerMl, 4)} mg/mL`;
+      resultNode("concentration-mcg")!.textContent = `${formatNumber(result.concentrationMcgPerMl, 2)} mcg/mL`;
+      resultNode("draw-volume")!.textContent = `${formatNumber(result.drawVolumeMl, 5)} mL`;
+      resultNode("microliters")!.textContent = `${formatNumber(result.drawVolumeMicroliters, 2)} µL`;
+      resultNode("nearest-marking")!.textContent = `${formatNumber(result.nearestSyringeUnits, 2)} units`;
+      resultNode("marking-detail")!.textContent =
+        `${formatNumber(result.nearestTickCount, 0)} tick mark${result.nearestTickCount === 1 ? "" : "s"}`;
+      resultNode("doses")!.textContent = formatNumber(result.dosesPerVial, 2);
+
+      if (fillNode) {
+        const width = Math.max(0, Math.min(308, 308 * (result.syringeFillPercent / 100)));
+        fillNode.setAttribute("width", String(width));
+      }
+
+      if (warningsNode) {
+        warningsNode.hidden = result.warnings.length === 0;
+        warningsNode.innerHTML = result.warnings.length
+          ? `<strong>Check this result:</strong><ul class="mt-2 list-disc space-y-1 pl-5">${result.warnings
+              .map((warning) => `<li>${warningMessages[warning]}</li>`)
+              .join("")}</ul>`
+          : "";
+      }
+    };
+
+    const setStatus = (message: string) => {
+      if (!statusNode) return;
+      statusNode.textContent = message;
+      window.setTimeout(() => {
+        statusNode.textContent = "";
+      }, 2500);
+    };
+
+    root.querySelector("[data-copy-result]")?.addEventListener("click", async () => {
+      const input = readFormState();
+      const result = calculatePeptide(input);
+      if (!result.isValid) return;
+      try {
+        await copyText(
+          `Peptide calculator result: ${formatNumber(result.syringeUnitsExact, 3)} U-100 units (${formatNumber(result.drawVolumeMl, 5)} mL), concentration ${formatNumber(result.concentrationMgPerMl, 4)} mg/mL.`
+        );
+        setStatus("Result copied");
+      } catch {
+        setStatus("Clipboard unavailable");
+      }
+    });
+
+    root.querySelector("[data-copy-link]")?.addEventListener("click", async () => {
+      const state = readFormState();
+      const url = new URL(window.location.href);
+      url.search = serializeCalculatorState(state).toString();
+      window.history.replaceState({}, "", url);
+      try {
+        await copyText(url.href);
+        setStatus("Share link copied");
+      } catch {
+        setStatus("Link added to address bar");
+      }
+    });
+
+    form.addEventListener("reset", () => {
+      window.setTimeout(() => {
+        setFormState(defaults);
+        const url = new URL(window.location.href);
+        url.search = "";
+        window.history.replaceState({}, "", url);
+        update();
+        setStatus("Calculator reset");
+      });
+    });
+
+    form.addEventListener("input", update);
+    form.addEventListener("change", update);
+
+    setFormState(initialState);
+    update();
+  });
+</script>

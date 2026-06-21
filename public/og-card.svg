@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#effcf9"/>
+  <circle cx="1060" cy="90" r="230" fill="#d6f7ef"/>
+  <circle cx="108" cy="595" r="280" fill="#dbeafe"/>
+  <rect x="86" y="82" width="82" height="82" rx="22" fill="#071b2f"/>
+  <text x="127" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#fff">PC</text>
+  <text x="86" y="248" font-family="Arial, sans-serif" font-size="70" font-weight="700" fill="#071b2f">Peptide Calculator</text>
+  <text x="86" y="323" font-family="Arial, sans-serif" font-size="36" fill="#334155">Reconstitution, concentration &amp; U-100 markings</text>
+  <rect x="86" y="397" width="338" height="74" rx="20" fill="#0b2947"/>
+  <text x="255" y="445" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#fff">Free · No signup</text>
+  <g transform="translate(760 365)">
+    <rect x="0" y="0" width="320" height="72" rx="14" fill="#fff" stroke="#123b61" stroke-width="6"/>
+    <rect x="6" y="6" width="102" height="60" rx="9" fill="#62d3c0"/>
+    <path d="M320 22h66v28h-66M386 36h46M-32-8v88M-32 11H0M-32 61H0" fill="none" stroke="#123b61" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <g stroke="#64748b" stroke-width="4">
+      <path d="M55 0v20M108 0v14M161 0v20M214 0v14M267 0v20"/>
+    </g>
+  </g>
+</svg>

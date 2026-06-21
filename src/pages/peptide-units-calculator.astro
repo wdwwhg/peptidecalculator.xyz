@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PeptideCalculator from "../components/PeptideCalculator.astro";
+import ToolLinks from "../components/ToolLinks.astro";
+
+const title = "Peptide Units Calculator: Convert mg or mcg to U-100 Markings";
+const description =
+  "Convert a known peptide amount into mL, microliters, and U-100 syringe volume markings while keeping the exact and nearest visible values separate.";
+const breadcrumbs = [
+  { name: "Home", url: "https://peptidecalculator.xyz/" },
+  {
+    name: "Peptide Units Calculator",
+    url: "https://peptidecalculator.xyz/peptide-units-calculator/"
+  }
+];
+---
+
+<BaseLayout title={title} description={description} path="/peptide-units-calculator/" pageType="tool" breadcrumbs={breadcrumbs}>
+  <section class="bg-white py-12 sm:py-16">
+    <div class="shell">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+        <div>
+          <p class="eyebrow">Volume markings explained</p>
+          <h1>Peptide Units Calculator</h1>
+          <p class="mt-5 text-xl text-slate-600">
+            Convert a target amount you already know into mL and markings on a U-100
+            syringe scale. The exact result is never replaced by a rounded line.
+          </p>
+          <div class="warning-callout text-sm">
+            “Units” on this page means syringe volume markings. It does not mean
+            international units (IU) or biological activity.
+          </div>
+        </div>
+        <PeptideCalculator heading="Convert peptide mass to syringe markings" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block border-y border-slate-200 bg-slate-50">
+    <div class="content-shell prose-copy">
+      <h2>How many U-100 units are in one milliliter?</h2>
+      <p>
+        A U-100 scale represents 100 volume markings per mL. That means 0.01 mL
+        corresponds to 1 marking, 0.1 mL corresponds to 10 markings, and 0.5 mL
+        corresponds to 50 markings.
+      </p>
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
+        <table class="w-full min-w-md text-left text-base">
+          <thead class="bg-navy-950 text-white">
+            <tr><th class="p-4">Liquid volume</th><th class="p-4">U-100 scale</th><th class="p-4">Microliters</th></tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr><td class="p-4">0.01 mL</td><td class="p-4">1 unit</td><td class="p-4">10 µL</td></tr>
+            <tr><td class="p-4">0.05 mL</td><td class="p-4">5 units</td><td class="p-4">50 µL</td></tr>
+            <tr><td class="p-4">0.10 mL</td><td class="p-4">10 units</td><td class="p-4">100 µL</td></tr>
+            <tr><td class="p-4">0.50 mL</td><td class="p-4">50 units</td><td class="p-4">500 µL</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Why the exact value and nearest marking are different</h2>
+      <p>
+        A calculation may produce 5.5 U-100 markings while a selected syringe only
+        shows whole-unit lines. The exact mathematical result remains 5.5. The nearest
+        line is displayed only to explain the physical scale limitation; it is not a
+        recommendation to round or use that value.
+      </p>
+
+      <h2>When the calculator displays a warning</h2>
+      <ul>
+        <li>The target amount is greater than the total vial mass entered.</li>
+        <li>The calculated liquid volume exceeds the selected syringe capacity.</li>
+        <li>The exact U-100 result does not align with the selected smallest marking.</li>
+      </ul>
+      <p>
+        For the underlying mass and volume equations, read the
+        <a href="/methodology/">calculator methodology</a>.
+      </p>
+    </div>
+  </section>
+
+  <ToolLinks />
+</BaseLayout>

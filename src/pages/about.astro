@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+const title = "About Peptide Calculator";
+const description =
+  "Learn why Peptide Calculator exists, how the independent free tool is maintained, and what its published editorial boundaries are.";
+const breadcrumbs = [
+  { name: "Home", url: "https://peptidecalculator.xyz/" },
+  { name: "About", url: "https://peptidecalculator.xyz/about/" }
+];
+---
+
+<BaseLayout title={title} description={description} path="/about/" pageType="page" breadcrumbs={breadcrumbs}>
+  <section class="section-block bg-white">
+    <div class="content-shell">
+      <Breadcrumbs items={breadcrumbs} />
+      <p class="eyebrow">Independent free tool</p>
+      <h1>About Peptide Calculator</h1>
+      <div class="prose-copy mt-10">
+        <p>
+          Peptide Calculator is a browser-based arithmetic tool built to make mass,
+          concentration, volume, and U-100 marking conversions easier to inspect.
+          It is available without an account, payment, or product purchase.
+        </p>
+
+        <h2>Our purpose</h2>
+        <p>
+          Many online calculators present a single syringe number without clearly showing
+          the formula, the exact liquid volume, or the limits of the result. This site
+          keeps those pieces visible so users can check the arithmetic and spot unit mistakes.
+        </p>
+
+        <h2>What independence means here</h2>
+        <ul>
+          <li>We do not sell peptides, syringes, diluents, prescriptions, or treatment.</li>
+          <li>We do not accept payment to prefill target amounts or promote products.</li>
+          <li>We do not require personal health details or an account.</li>
+          <li>We do not generate personalized dose recommendations.</li>
+        </ul>
+
+        <h2>How accuracy is approached</h2>
+        <p>
+          The calculation core is covered by automated tests, including the published
+          reference example and error conditions. Formulas and assumptions are documented
+          on the <a href="/methodology/">methodology page</a>.
+        </p>
+
+        <h2>Current review status</h2>
+        <p>
+          No medical or pharmacy professional is currently named as a reviewer. The site
+          does not imply otherwise. Content explains arithmetic and limitations only, and
+          users should consult an appropriately qualified professional for medical decisions.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

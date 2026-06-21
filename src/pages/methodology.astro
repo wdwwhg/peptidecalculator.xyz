@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+const title = "Peptide Calculator Methodology: Formulas, Units & Limits";
+const description =
+  "Review the formulas, unit conversions, precision policy, warnings, editorial process, and limitations used by Peptide Calculator.";
+const breadcrumbs = [
+  { name: "Home", url: "https://peptidecalculator.xyz/" },
+  { name: "Methodology", url: "https://peptidecalculator.xyz/methodology/" }
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path="/methodology/"
+  pageType="article"
+  breadcrumbs={breadcrumbs}
+  datePublished="2026-06-21"
+  dateModified="2026-06-21"
+>
+  <article class="section-block bg-white">
+    <div class="content-shell">
+      <Breadcrumbs items={breadcrumbs} />
+      <header class="mb-12">
+        <p class="eyebrow">Open methodology</p>
+        <h1>Peptide Calculator Formulas, Units & Limits</h1>
+        <p class="mt-5 text-xl text-slate-600">
+          Every result is produced by the deterministic equations below. No model,
+          database, dose table, or hidden recommendation system is involved.
+        </p>
+        <p class="mt-5 text-sm text-slate-500">Version 1.0 · Last reviewed June 21, 2026</p>
+      </header>
+
+      <div class="prose-copy">
+        <h2>Calculation sequence</h2>
+        <ol>
+          <li><strong>Normalize mass:</strong> mg × 1,000 = mcg.</li>
+          <li><strong>Concentration:</strong> vial mass in mcg ÷ liquid mL = mcg/mL.</li>
+          <li><strong>Draw volume:</strong> target mcg ÷ concentration = mL.</li>
+          <li><strong>Microliters:</strong> mL × 1,000 = µL.</li>
+          <li><strong>U-100 volume markings:</strong> mL × 100 = marked units.</li>
+          <li><strong>Theoretical portions:</strong> vial mass ÷ target mass.</li>
+        </ol>
+
+        <h2>Reference calculation</h2>
+        <div class="callout">
+          10 mg = 10,000 mcg. With 2 mL, concentration is 5,000 mcg/mL.
+          A 250 mcg target requires 0.05 mL. On a U-100 volume scale,
+          0.05 mL corresponds to 5 markings. The theoretical vial count is 40.
+        </div>
+
+        <h2>Precision and rounding policy</h2>
+        <p>
+          JavaScript number precision is retained throughout the calculation. Display
+          formatting is applied only after the result is complete. The exact U-100 value
+          and nearest visible marking are stored and displayed separately.
+        </p>
+        <p>
+          If the exact value does not align with the selected marking interval, the result
+          receives a warning. The calculator does not determine whether rounding, changing
+          equipment, or changing concentration is acceptable.
+        </p>
+
+        <h2>Warnings produced by the tool</h2>
+        <ul>
+          <li>Any required value is zero, negative, blank, or not a finite number.</li>
+          <li>The target mass is greater than the total entered vial mass.</li>
+          <li>The calculated volume is greater than the selected syringe capacity.</li>
+          <li>The exact result falls between visible syringe markings.</li>
+        </ul>
+
+        <h2>Assumptions</h2>
+        <ul>
+          <li>The user-entered labels and units are accurate.</li>
+          <li>The entered liquid volume is the relevant final calculation volume.</li>
+          <li>The selected syringe uses a U-100 volume scale of 100 markings per mL.</li>
+          <li>The mixture is treated as uniform for arithmetic purposes.</li>
+          <li>The theoretical portion count excludes dead space, transfer loss, and waste.</li>
+        </ul>
+
+        <h2>Editorial and review policy</h2>
+        <p>
+          The site is maintained as an independent calculation and educational resource.
+          It currently has no named medical or pharmacy reviewer. We do not imply clinical
+          review, professional credentials, product endorsement, or treatment expertise.
+          Material changes update the visible review date and are checked against the
+          test suite before publication.
+        </p>
+
+        <h2>Reference standards</h2>
+        <ul>
+          <li><a href="https://www.nist.gov/pml/owm/si-units-mass" rel="noreferrer">NIST: SI Units—Mass</a> for metric unit context.</li>
+          <li><a href="https://www.nist.gov/pml/owm/si-units-volume" rel="noreferrer">NIST: SI Units—Volume</a> for volume unit context.</li>
+          <li><a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content" rel="noreferrer">Google Search Central: helpful, reliable, people-first content</a> for editorial transparency principles.</li>
+          <li><a href="/medical-disclaimer/">Site medical disclaimer</a> for intended use and limitations.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

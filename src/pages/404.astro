@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page Not Found | Peptide Calculator"
+  description="The requested page could not be found."
+  path="/404/"
+  noindex
+>
+  <section class="section-block bg-white">
+    <div class="content-shell py-10 text-center">
+      <p class="eyebrow">404 error</p>
+      <h1>That page is not here</h1>
+      <p class="mx-auto mt-5 max-w-xl text-lg text-slate-600">
+        The address may be outdated or mistyped. Return to the calculator or use one of
+        the focused tools below.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a class="button-primary" href="/">Open calculator</a>
+        <a class="button-secondary" href="/guides/how-to-use-a-peptide-calculator/">Read the guide</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

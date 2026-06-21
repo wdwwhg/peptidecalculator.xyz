@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PeptideCalculator from "../components/PeptideCalculator.astro";
+import ToolLinks from "../components/ToolLinks.astro";
+
+const title = "Peptide Reconstitution Calculator: Concentration & Volume";
+const description =
+  "Use a free peptide reconstitution calculator to convert vial mass and diluent volume into concentration, draw volume, and U-100 syringe markings.";
+const breadcrumbs = [
+  { name: "Home", url: "https://peptidecalculator.xyz/" },
+  {
+    name: "Peptide Reconstitution Calculator",
+    url: "https://peptidecalculator.xyz/peptide-reconstitution-calculator/"
+  }
+];
+---
+
+<BaseLayout title={title} description={description} path="/peptide-reconstitution-calculator/" pageType="tool" breadcrumbs={breadcrumbs}>
+  <section class="bg-white py-12 sm:py-16">
+    <div class="shell">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="mx-auto max-w-4xl text-center">
+        <p class="eyebrow">Mass + liquid → concentration</p>
+        <h1>Peptide Reconstitution Calculator</h1>
+        <p class="mx-auto mt-5 max-w-3xl text-xl text-slate-600">
+          Calculate concentration after entering the mass printed on a vial and the
+          volume of liquid added, then convert a known target mass into volume markings.
+        </p>
+      </div>
+      <div class="mx-auto mt-10 max-w-5xl">
+        <PeptideCalculator
+          heading="Peptide reconstitution calculator"
+          intro="Start with the labeled vial mass and the final liquid volume. The calculator keeps the formula visible and does not suggest a target dose."
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block border-y border-slate-200 bg-slate-50">
+    <div class="content-shell prose-copy">
+      <h2>What peptide reconstitution means in this calculator</h2>
+      <p>
+        Reconstitution is represented here as a mathematical relationship between the
+        total mass entered for a vial and the final liquid volume entered by the user.
+        Dividing mass by volume produces a concentration such as mg/mL or mcg/mL.
+      </p>
+      <div class="callout">
+        <strong>Formula:</strong> concentration (mcg/mL) = total vial mass (mcg) ÷
+        final liquid volume (mL).
+      </div>
+      <p>
+        The word “final” matters. Use the volume specified in your source instructions.
+        This website cannot verify the identity, sterility, stability, compatibility, or
+        suitability of any vial or liquid.
+      </p>
+
+      <h2>How the reconstitution result becomes a syringe volume</h2>
+      <ol>
+        <li>Convert the vial amount and target amount to the same mass unit.</li>
+        <li>Divide the vial mass by liquid volume to find concentration.</li>
+        <li>Divide the known target mass by concentration to find mL.</li>
+        <li>For a U-100 volume scale, multiply mL by 100 to show markings.</li>
+      </ol>
+      <p>
+        If the exact result falls between the selected syringe’s visible lines, the
+        calculator shows a warning and preserves the unrounded result.
+      </p>
+
+      <h2>Common reconstitution calculation mistakes</h2>
+      <ul>
+        <li>Mixing mg and mcg without applying the 1,000-to-1 conversion.</li>
+        <li>Entering a syringe marking as though it were a biological potency unit.</li>
+        <li>Rounding too early, before the final volume has been calculated.</li>
+        <li>Using a combined blend total when the individual component mass is unknown.</li>
+        <li>Assuming the theoretical number of doses accounts for real-world handling loss.</li>
+      </ul>
+      <p>
+        See the <a href="/methodology/">full formula and precision policy</a> for the exact
+        sequence used by the tool.
+      </p>
+    </div>
+  </section>
+
+  <ToolLinks />
+</BaseLayout>

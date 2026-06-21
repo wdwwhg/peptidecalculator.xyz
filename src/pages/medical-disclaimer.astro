@@ -1,0 +1,62 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+const title = "Medical Disclaimer | Peptide Calculator";
+const description =
+  "Read the medical disclaimer, intended use, and limitations for Peptide Calculator.";
+const breadcrumbs = [
+  { name: "Home", url: "https://peptidecalculator.xyz/" },
+  { name: "Medical Disclaimer", url: "https://peptidecalculator.xyz/medical-disclaimer/" }
+];
+---
+
+<BaseLayout title={title} description={description} path="/medical-disclaimer/" pageType="page" breadcrumbs={breadcrumbs}>
+  <section class="section-block bg-white">
+    <div class="content-shell">
+      <Breadcrumbs items={breadcrumbs} />
+      <p class="eyebrow">Read before use</p>
+      <h1>Medical Disclaimer</h1>
+      <div class="prose-copy mt-10">
+        <div class="warning-callout">
+          Peptide Calculator provides general arithmetic and educational information only.
+          It is not medical advice, diagnosis, treatment, prescribing, pharmacy guidance,
+          or a substitute for professional judgment.
+        </div>
+
+        <h2>No dosing recommendation</h2>
+        <p>
+          The calculator converts values entered by the user. It does not determine a safe,
+          effective, legal, approved, or appropriate dose, frequency, route, product,
+          device, diluent, or handling process.
+        </p>
+
+        <h2>No product verification</h2>
+        <p>
+          The site cannot verify the identity, purity, strength, sterility, stability,
+          storage, labeling, legality, approval status, or source of any substance or product.
+        </p>
+
+        <h2>No professional relationship</h2>
+        <p>
+          Use of the website does not create a clinician-patient, pharmacist-patient,
+          research, advisory, or other professional relationship. No medical or pharmacy
+          reviewer is currently represented on this site.
+        </p>
+
+        <h2>Emergency and adverse-event information</h2>
+        <p>
+          Do not use this website for emergencies. Contact local emergency services or an
+          appropriate poison control or healthcare service if urgent help is needed.
+        </p>
+
+        <h2>Your responsibility</h2>
+        <p>
+          You are responsible for checking source instructions, units, calculations,
+          equipment markings, and professional guidance. Stop and obtain qualified help
+          whenever information is missing, inconsistent, or unclear.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

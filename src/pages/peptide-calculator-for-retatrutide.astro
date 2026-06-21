@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import PeptideCalculator from "../components/PeptideCalculator.astro";
+import ToolLinks from "../components/ToolLinks.astro";
+
+const title = "Peptide Calculator for Retatrutide: Volume Conversion Tool";
+const description =
+  "Use this neutral retatrutide calculation page to convert a labeled vial amount, liquid volume, and target amount you already know into concentration and volume.";
+const breadcrumbs = [
+  { name: "Home", url: "https://peptidecalculator.xyz/" },
+  {
+    name: "Calculator for Retatrutide",
+    url: "https://peptidecalculator.xyz/peptide-calculator-for-retatrutide/"
+  }
+];
+---
+
+<BaseLayout title={title} description={description} path="/peptide-calculator-for-retatrutide/" pageType="tool" breadcrumbs={breadcrumbs}>
+  <section class="bg-white py-12 sm:py-16">
+    <div class="shell">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="mx-auto max-w-4xl text-center">
+        <p class="eyebrow">Neutral arithmetic tool</p>
+        <h1>Peptide Calculator for Retatrutide</h1>
+        <p class="mx-auto mt-5 max-w-3xl text-xl text-slate-600">
+          Enter a labeled mass, liquid volume, and target amount you already have.
+          This page performs conversion arithmetic only and provides no dosing guidance.
+        </p>
+      </div>
+      <div class="mx-auto mt-10 max-w-5xl">
+        <PeptideCalculator
+          heading="Retatrutide mass-to-volume calculator"
+          intro="No dose is preselected. Verify the vial label and use only a target amount supplied by an appropriate qualified source."
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block border-y border-slate-200 bg-slate-50">
+    <div class="content-shell prose-copy">
+      <div class="warning-callout">
+        <strong>No medical or dosing recommendation:</strong> This page does not state
+        a common, standard, starting, research, or weight-loss dose. It does not assess
+        eligibility, product quality, legality, interactions, adverse effects, or monitoring.
+      </div>
+
+      <h2>What this retatrutide calculator can do</h2>
+      <p>
+        The calculator can convert three user-provided values: the total mass shown for
+        a vial, the liquid volume, and a target mass already known to the user. It then
+        reports concentration, calculated liquid volume, microliters, and U-100 volume markings.
+      </p>
+
+      <h2>What this page cannot verify</h2>
+      <ul>
+        <li>Whether a product actually contains the labeled substance or amount.</li>
+        <li>Whether any product is approved, lawful, sterile, stable, or appropriate.</li>
+        <li>Whether a target amount or schedule is suitable for a person.</li>
+        <li>Whether a particular diluent, device, route, or handling method is correct.</li>
+      </ul>
+
+      <h2>Why no target amount is prefilled</h2>
+      <p>
+        A prefilled value could be mistaken for a recommendation. The calculator therefore
+        uses the same neutral example defaults as the general tool and requires users to
+        replace them with values from an appropriate source before relying on any output.
+      </p>
+      <p>
+        Review the <a href="/medical-disclaimer/">medical disclaimer</a> and
+        <a href="/methodology/">formula methodology</a> before using the result.
+      </p>
+    </div>
+  </section>
+
+  <ToolLinks />
+</BaseLayout>

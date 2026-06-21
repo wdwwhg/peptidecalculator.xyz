@@ -1,0 +1,166 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PeptideCalculator from "../components/PeptideCalculator.astro";
+import ToolLinks from "../components/ToolLinks.astro";
+
+const title = "Peptide Calculator: Free Reconstitution & Syringe Units";
+const description =
+  "Use this free peptide calculator to convert vial strength, diluent volume, and a known target dose into concentration, mL, and U-100 syringe units. No signup.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path="/"
+  pageType="tool"
+  breadcrumbs={[{ name: "Home", url: "https://peptidecalculator.xyz/" }]}
+>
+  <section class="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20">
+    <div class="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-clinical-50 to-transparent" aria-hidden="true"></div>
+    <div class="shell relative grid items-start gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:gap-12">
+      <div class="pt-2 lg:sticky lg:top-6 lg:pt-8">
+        <p class="eyebrow">Free · private · instant</p>
+        <h1>Peptide Calculator for Reconstitution & Syringe Units</h1>
+        <p class="mt-6 text-xl leading-8 text-slate-600">
+          Convert a known vial amount, liquid volume, and target dose into concentration,
+          mL, microliters, and U-100 syringe markings—without creating an account.
+        </p>
+        <ul class="mt-7 grid gap-3 text-sm font-medium text-slate-700">
+          <li class="flex gap-3"><span class="text-clinical-600" aria-hidden="true">✓</span> Exact result and nearest visible marking shown separately</li>
+          <li class="flex gap-3"><span class="text-clinical-600" aria-hidden="true">✓</span> Supports mg, mcg, mL, µL, and U-100 volume units</li>
+          <li class="flex gap-3"><span class="text-clinical-600" aria-hidden="true">✓</span> Formula, limitations, and warnings are fully explained</li>
+        </ul>
+        <div class="warning-callout mt-8 text-sm leading-6">
+          <strong>Important:</strong> Enter only a target dose you already know. This tool
+          does not recommend substances, doses, routes, or treatment.
+        </div>
+      </div>
+
+      <PeptideCalculator />
+    </div>
+  </section>
+
+  <section class="section-block border-y border-slate-200 bg-slate-50">
+    <div class="shell">
+      <div class="mx-auto mb-10 max-w-3xl text-center">
+        <p class="eyebrow">How it works</p>
+        <h2>Three inputs turn a label into a clear volume result</h2>
+        <p class="mt-4 text-lg text-slate-600">
+          The calculator follows the same transparent mass-to-concentration-to-volume
+          sequence shown on our methodology page.
+        </p>
+      </div>
+      <ol class="grid gap-5 md:grid-cols-3">
+        <li class="surface-card p-6">
+          <span class="bg-clinical-100 text-clinical-700 grid size-9 place-items-center rounded-full text-sm font-bold">1</span>
+          <h3 class="mt-5">Enter vial and liquid amounts</h3>
+          <p class="mt-3 text-sm text-slate-600">Use the total mass printed on the vial and the final volume of diluent.</p>
+        </li>
+        <li class="surface-card p-6">
+          <span class="bg-clinical-100 text-clinical-700 grid size-9 place-items-center rounded-full text-sm font-bold">2</span>
+          <h3 class="mt-5">Enter a known target dose</h3>
+          <p class="mt-3 text-sm text-slate-600">The tool converts your existing target value; it never chooses one for you.</p>
+        </li>
+        <li class="surface-card p-6">
+          <span class="bg-clinical-100 text-clinical-700 grid size-9 place-items-center rounded-full text-sm font-bold">3</span>
+          <h3 class="mt-5">Read exact and visible values</h3>
+          <p class="mt-3 text-sm text-slate-600">Compare the exact volume with the nearest marking on the selected U-100 syringe.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-block bg-white">
+    <div class="shell grid gap-12 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow">Understand the result</p>
+        <h2>What a peptide calculator in mg actually calculates</h2>
+        <p class="mt-5 text-lg text-slate-600">
+          A calculation starts with mass and volume—not a syringe number. The tool first
+          converts mg to mcg when necessary, then determines concentration, then calculates
+          how much liquid contains your entered target mass.
+        </p>
+        <div class="callout">
+          <p class="font-semibold text-navy-950">Reference example</p>
+          <p class="mt-2">
+            A 10 mg vial with 2 mL of liquid has a concentration of 5 mg/mL.
+            A known 250 mcg target equals 0.05 mL, which is 5 markings on a U-100 scale.
+          </p>
+        </div>
+        <a class="button-secondary" href="/methodology/">Review every formula</a>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <p class="text-sm font-bold text-clinical-700">Concentration</p>
+          <p class="mt-2 text-2xl font-bold text-navy-950">mass ÷ volume</p>
+          <p class="mt-2 text-sm text-slate-600">Displayed in both mg/mL and mcg/mL.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <p class="text-sm font-bold text-clinical-700">Draw volume</p>
+          <p class="mt-2 text-2xl font-bold text-navy-950">dose ÷ concentration</p>
+          <p class="mt-2 text-sm text-slate-600">Displayed in mL and microliters.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <p class="text-sm font-bold text-clinical-700">U-100 markings</p>
+          <p class="mt-2 text-2xl font-bold text-navy-950">mL × 100</p>
+          <p class="mt-2 text-sm text-slate-600">A volume scale, not a biological potency unit.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <p class="text-sm font-bold text-clinical-700">Doses per vial</p>
+          <p class="mt-2 text-2xl font-bold text-navy-950">vial mass ÷ dose</p>
+          <p class="mt-2 text-sm text-slate-600">A theoretical value before handling losses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ToolLinks />
+
+  <section class="section-block border-y border-slate-200 bg-slate-50">
+    <div class="content-shell">
+      <p class="eyebrow">Common questions</p>
+      <h2>Peptide calculator FAQ</h2>
+      <div class="mt-8 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white px-5 sm:px-7">
+        <details class="group py-5" open>
+          <summary class="cursor-pointer list-none pr-8 font-semibold text-navy-950">Is this peptide calculator free and online?</summary>
+          <p class="mt-3 text-slate-600">Yes. The calculator runs directly in your browser with no account, payment, download, or app installation.</p>
+        </details>
+        <details class="group py-5">
+          <summary class="cursor-pointer list-none pr-8 font-semibold text-navy-950">Is there a peptide calculator app?</summary>
+          <p class="mt-3 text-slate-600">This responsive web app works on phones, tablets, and desktops. You can add the page to your home screen using your browser if you want app-like access.</p>
+        </details>
+        <details class="group py-5">
+          <summary class="cursor-pointer list-none pr-8 font-semibold text-navy-950">What do “units” mean on a peptide calculator?</summary>
+          <p class="mt-3 text-slate-600">Here, units mean markings on a U-100 syringe volume scale: 100 markings correspond to 1 mL. They are not international units (IU) of biological activity.</p>
+        </details>
+        <details class="group py-5">
+          <summary class="cursor-pointer list-none pr-8 font-semibold text-navy-950">Does the calculator choose a peptide dose?</summary>
+          <p class="mt-3 text-slate-600">No. It only converts a target mass that you enter. It cannot determine whether that target is appropriate for any person or purpose.</p>
+        </details>
+        <details class="group py-5">
+          <summary class="cursor-pointer list-none pr-8 font-semibold text-navy-950">Can I use it as a peptide calculator for blends?</summary>
+          <p class="mt-3 text-slate-600">Only if you are calculating one clearly labeled component at a time and know its individual mass. A combined vial total cannot reveal the concentration of each component without the separate amounts.</p>
+        </details>
+        <details class="group py-5">
+          <summary class="cursor-pointer list-none pr-8 font-semibold text-navy-950">Why does the nearest marking differ from the exact result?</summary>
+          <p class="mt-3 text-slate-600">Some exact volumes fall between the visible lines on a syringe. The calculator preserves the exact arithmetic and separately identifies the nearest line so the limitation is visible.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block bg-white">
+    <div class="content-shell text-center">
+      <p class="eyebrow">Transparent by design</p>
+      <h2>Check the method before trusting the number</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-lg text-slate-600">
+        We publish the formulas, assumptions, update date, limitations, and editorial
+        policy behind this calculator. No expert credentials or medical review are implied.
+      </p>
+      <div class="mt-7 flex flex-wrap justify-center gap-3">
+        <a class="button-primary" href="/methodology/">Read the methodology</a>
+        <a class="button-secondary" href="/medical-disclaimer/">Medical disclaimer</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

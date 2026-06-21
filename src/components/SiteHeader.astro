@@ -1,0 +1,85 @@
+---
+const links = [
+  { href: "/", label: "Calculator" },
+  { href: "/peptide-reconstitution-calculator/", label: "Reconstitution" },
+  { href: "/peptide-units-calculator/", label: "Syringe units" },
+  { href: "/guides/how-to-use-a-peptide-calculator/", label: "Guide" },
+  { href: "/methodology/", label: "Methodology" }
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="border-b border-slate-200 bg-white">
+  <div class="shell flex min-h-18 items-center justify-between gap-5">
+    <a
+      href="/"
+      class="text-navy-950 flex items-center gap-2.5 text-base font-bold no-underline"
+      aria-label="PC, Peptide Calculator home"
+    >
+      <span
+        class="bg-navy-900 grid size-9 place-items-center rounded-xl text-sm font-black text-white"
+        aria-hidden="true"
+      >
+        PC
+      </span>
+      <span class="hidden sm:inline">Peptide Calculator</span>
+    </a>
+
+    <nav aria-label="Primary navigation" class="hidden md:block">
+      <ul class="flex min-w-max items-center gap-1">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={pathname === link.href ? "page" : undefined}
+                class:list={[
+                  "block rounded-lg px-3 py-2 text-sm font-medium no-underline transition-colors",
+                  pathname === link.href
+                    ? "bg-clinical-50 text-clinical-700"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-navy-950"
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <details class="relative md:hidden">
+      <summary
+        class="text-navy-900 flex min-h-11 cursor-pointer list-none items-center rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold"
+      >
+        Menu
+      </summary>
+      <nav
+        aria-label="Mobile navigation"
+        class="absolute right-0 z-40 mt-2 w-64 rounded-2xl border border-slate-200 bg-white p-2 shadow-card"
+      >
+        <ul class="grid">
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  aria-current={pathname === link.href ? "page" : undefined}
+                  class:list={[
+                    "block min-h-11 rounded-xl px-3 py-3 text-sm font-medium no-underline",
+                    pathname === link.href
+                      ? "bg-clinical-50 text-clinical-700"
+                      : "text-slate-700 hover:bg-slate-100"
+                  ]}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>

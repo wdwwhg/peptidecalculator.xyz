@@ -1,0 +1,98 @@
+---
+import "../styles/global.css";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import {
+  buildStructuredData,
+  type BreadcrumbItem
+} from "../lib/structuredData";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  pageType?: "tool" | "article" | "page";
+  breadcrumbs?: BreadcrumbItem[];
+  datePublished?: string;
+  dateModified?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  path,
+  pageType = "page",
+  breadcrumbs = [
+    { name: "Home", url: "https://peptidecalculator.xyz/" }
+  ],
+  datePublished,
+  dateModified,
+  noindex = false
+} = Astro.props;
+
+const canonicalUrl = new URL(path, Astro.site ?? "https://peptidecalculator.xyz").href;
+const structuredData = buildStructuredData({
+  title,
+  description,
+  canonicalUrl,
+  breadcrumbs,
+  pageType,
+  datePublished,
+  dateModified
+});
+const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#071b2f" />
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"} />
+    {googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content={pageType === "article" ? "article" : "website"} />
+    <meta property="og:site_name" content="Peptide Calculator" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content="https://peptidecalculator.xyz/og-card.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://peptidecalculator.xyz/og-card.svg" />
+
+    <title>{title}</title>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+    {
+      analyticsToken && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+        />
+      )
+    }
+  </head>
+  <body>
+    <a
+      href="#main-content"
+      class="bg-navy-950 fixed top-3 left-3 z-50 -translate-y-20 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-transform focus:translate-y-0"
+    >
+      Skip to main content
+    </a>
+    <SiteHeader />
+    <main id="main-content">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

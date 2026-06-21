@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+const title = "Privacy Policy | Peptide Calculator";
+const description =
+  "Learn what Peptide Calculator stores, how optional privacy-focused analytics work, and how shared calculation URLs are handled.";
+const breadcrumbs = [
+  { name: "Home", url: "https://peptidecalculator.xyz/" },
+  { name: "Privacy", url: "https://peptidecalculator.xyz/privacy/" }
+];
+---
+
+<BaseLayout title={title} description={description} path="/privacy/" pageType="page" breadcrumbs={breadcrumbs}>
+  <section class="section-block bg-white">
+    <div class="content-shell">
+      <Breadcrumbs items={breadcrumbs} />
+      <p class="eyebrow">Privacy by default</p>
+      <h1>Privacy Policy</h1>
+      <p class="mt-5 text-sm text-slate-500">Effective June 21, 2026</p>
+      <div class="prose-copy mt-10">
+        <h2>Calculator data</h2>
+        <p>
+          Calculations run in your browser. This site does not require an account and does
+          not intentionally collect names, medical histories, diagnoses, or treatment records.
+        </p>
+
+        <h2>Share links</h2>
+        <p>
+          If you choose “Copy share link,” the numeric calculator inputs are placed in the
+          page URL. Anyone who receives that URL can see those values. URLs may also appear
+          in browser history, server request logs, or tools used by the recipient. Do not
+          place personal or sensitive information in a shared URL.
+        </p>
+
+        <h2>Analytics and infrastructure</h2>
+        <p>
+          The site may use Cloudflare Web Analytics and Cloudflare infrastructure to
+          understand aggregate traffic, performance, and security events. We do not use
+          Google Analytics, advertising pixels, or behavioral advertising cookies in the
+          current version.
+        </p>
+
+        <h2>Local browser features</h2>
+        <p>
+          Copy buttons use your browser clipboard when you activate them. The calculator
+          does not use local storage or create a user profile.
+        </p>
+
+        <h2>External links</h2>
+        <p>
+          Reference links may lead to third-party websites with their own privacy practices.
+          Review those policies before providing information to another site.
+        </p>
+
+        <h2>Changes</h2>
+        <p>
+          Material changes will be reflected on this page with a revised effective date.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

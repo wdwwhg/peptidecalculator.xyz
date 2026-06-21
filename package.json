@@ -4,13 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "check": "astro check",
+    "dev": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "build": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "check": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "check:site": "node scripts/check-built-site.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "verify": "npm run check && npm run test && npm run build"
+    "verify": "npm run check && npm run test && npm run build && npm run check:site"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.3",
@@ -20,7 +21,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "cross-env": "^10.1.0",
     "typescript": "^5.9.3",
+    "vite": "7.3.5",
     "vitest": "4.1.9"
   }
 }

@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+const title = "Terms of Use | Peptide Calculator";
+const description =
+  "Review the terms governing access to and use of the Peptide Calculator website and its calculation results.";
+const breadcrumbs = [
+  { name: "Home", url: "https://peptidecalculator.xyz/" },
+  { name: "Terms", url: "https://peptidecalculator.xyz/terms/" }
+];
+---
+
+<BaseLayout title={title} description={description} path="/terms/" pageType="page" breadcrumbs={breadcrumbs}>
+  <section class="section-block bg-white">
+    <div class="content-shell">
+      <Breadcrumbs items={breadcrumbs} />
+      <p class="eyebrow">Website terms</p>
+      <h1>Terms of Use</h1>
+      <p class="mt-5 text-sm text-slate-500">Effective June 21, 2026</p>
+      <div class="prose-copy mt-10">
+        <h2>Acceptance</h2>
+        <p>
+          By accessing this website, you agree to use it only for lawful purposes and in
+          accordance with these terms and the medical disclaimer.
+        </p>
+
+        <h2>Educational calculation service</h2>
+        <p>
+          The website provides general calculation and educational content. Results depend
+          entirely on user-entered values and assumptions. They are not professional advice
+          and are not guaranteed to be suitable for any specific use.
+        </p>
+
+        <h2>User responsibilities</h2>
+        <p>
+          You are responsible for verifying all labels, units, source instructions, entered
+          values, results, equipment, and professional guidance before taking any action.
+          You must not use the site to facilitate unlawful, unsafe, or deceptive activity.
+        </p>
+
+        <h2>No warranties</h2>
+        <p>
+          The site is provided on an “as is” and “as available” basis without warranties
+          of accuracy, availability, fitness for a particular purpose, or non-infringement
+          to the fullest extent permitted by applicable law.
+        </p>
+
+        <h2>Limitation of liability</h2>
+        <p>
+          To the fullest extent permitted by law, the site operator is not liable for loss
+          or harm arising from reliance on user-entered data, calculation outputs, external
+          content, interrupted access, or use inconsistent with these terms.
+        </p>
+
+        <h2>Changes and availability</h2>
+        <p>
+          Features, content, and these terms may change. Access may be suspended or ended
+          without notice for maintenance, security, legal, or operational reasons.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
