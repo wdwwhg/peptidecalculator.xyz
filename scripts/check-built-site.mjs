@@ -48,6 +48,12 @@ for (const file of htmlFiles) {
   if (!html.includes("gtag('config', 'G-560YQ8HT53')")) {
     failures.push(`${displayPath}: missing Google Analytics configuration`);
   }
+  if (!html.includes("https://analytics.ahrefs.com/analytics.js")) {
+    failures.push(`${displayPath}: missing Ahrefs Analytics loader`);
+  }
+  if (!html.includes('data-key="qt1BXcGo8ZW+fkGBRJm7uQ"')) {
+    failures.push(`${displayPath}: missing Ahrefs Analytics data key`);
+  }
 
   for (const match of html.matchAll(/href="(\/[^"#?]*[^"#?]?)"/g)) {
     const href = match[1];
